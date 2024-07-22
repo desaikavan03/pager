@@ -364,19 +364,27 @@ void loop() {
           second_flag = true;
           digitalWrite(vibrate_pin, HIGH);
           digitalWrite(buzzer_pin, HIGH);
-        
+          // battery_percentage = get_battery_percentage();
+          // Trasmit.tx_data[0] = myDevice_id;
+          // Trasmit.tx_data[1] = 2;
+          // Trasmit.tx_data[2] = battery_percentage;
+          // Trasmit.tx_data[3] = 0;
+          // result1 = esp_now_send(broadcast_address, (uint8_t *)&Trasmit, sizeof(Trasmit));
+          // if (result1 == ESP_OK) Serial.println("pdata=" + String(Trasmit.tx_data[0]) + "," + String(Trasmit.tx_data[1]) + "," + String(Trasmit.tx_data[2]) + "," + String(Trasmit.tx_data[3]));
+
+          // else Serial.println("Send Failed....");
           last_millis = millis();
         } else {
           if (millis() - last_millis >= send_interval) {
-          battery_percentage = get_battery_percentage();
-          Trasmit.tx_data[0] = myDevice_id;
-          Trasmit.tx_data[1] = 2;
-          Trasmit.tx_data[2] = battery_percentage;
-          Trasmit.tx_data[3] = 0;
-          result1 = esp_now_send(broadcast_address, (uint8_t *)&Trasmit, sizeof(Trasmit));
-          if (result1 == ESP_OK) Serial.println("pdata=" + String(Trasmit.tx_data[0]) + "," + String(Trasmit.tx_data[1]) + "," + String(Trasmit.tx_data[2]) + "," + String(Trasmit.tx_data[3]));
+            battery_percentage = get_battery_percentage();
+            Trasmit.tx_data[0] = myDevice_id;
+            Trasmit.tx_data[1] = 2;
+            Trasmit.tx_data[2] = battery_percentage;
+            Trasmit.tx_data[3] = 0;
+            result1 = esp_now_send(broadcast_address, (uint8_t *)&Trasmit, sizeof(Trasmit));
+            if (result1 == ESP_OK) Serial.println("pdata=" + String(Trasmit.tx_data[0]) + "," + String(Trasmit.tx_data[1]) + "," + String(Trasmit.tx_data[2]) + "," + String(Trasmit.tx_data[3]));
 
-          else Serial.println("Send Failed....");
+            else Serial.println("Send Failed....");
             second_flag = false;
           }
         }
