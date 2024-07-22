@@ -364,6 +364,10 @@ void loop() {
           second_flag = true;
           digitalWrite(vibrate_pin, HIGH);
           digitalWrite(buzzer_pin, HIGH);
+        
+          last_millis = millis();
+        } else {
+          if (millis() - last_millis >= send_interval) {
           battery_percentage = get_battery_percentage();
           Trasmit.tx_data[0] = myDevice_id;
           Trasmit.tx_data[1] = 2;
@@ -373,9 +377,6 @@ void loop() {
           if (result1 == ESP_OK) Serial.println("pdata=" + String(Trasmit.tx_data[0]) + "," + String(Trasmit.tx_data[1]) + "," + String(Trasmit.tx_data[2]) + "," + String(Trasmit.tx_data[3]));
 
           else Serial.println("Send Failed....");
-          last_millis = millis();
-        } else {
-          if (millis() - last_millis >= send_interval) {
             second_flag = false;
           }
         }
